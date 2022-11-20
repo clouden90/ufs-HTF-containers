@@ -16,6 +16,7 @@
 #                       [TEST_NAME] TEST_NAME in rt.conf, currenly only support:#
 #                                            control                            # 
 #                                            control_p8                         #
+#                                            cpld_control_nowave_noaero_p8      #
 #                                                                               #
 #                                                                               #
 #                       [SYEAR] [SMONTH] [SDAY] [SHOUR]                         #
@@ -136,8 +137,8 @@ source ${TEST_DIR}/tests/${TEST_NAME}
 
 ### user defined vars 
 export DOMAINS_STACK_SIZE=8000000
-export INPES=2
-export JNPES=2
+export INPES=2 #2
+export JNPES=1 #2
 export OCN_tasks=10
 export ICE_tasks=6
 export WAV_tasks=2
@@ -150,10 +151,10 @@ export SHOUR=${CHOUR:-00}
 export SECS=`expr $SHOUR \* 3600`
 
 export MOM6_RESTART_SETTING=r
-export FHMAX=${_FHMAX:-6}
-export OUTPUT_FH='6 -1'
-export RESTART_N=6
-export RESTART_INTERVAL='6 -1'
+export FHMAX=${_FHMAX:-1}
+export OUTPUT_FH='1 -1'
+export RESTART_N=1
+export RESTART_INTERVAL='1 -1'
 
 ### end of user define part
 
