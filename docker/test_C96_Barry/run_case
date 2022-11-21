@@ -137,8 +137,8 @@ source ${TEST_DIR}/tests/${TEST_NAME}
 
 ### user defined vars 
 export DOMAINS_STACK_SIZE=8000000
-export INPES=2 #2
-export JNPES=1 #2
+export INPES=2
+export JNPES=2
 export OCN_tasks=10
 export ICE_tasks=6
 export WAV_tasks=2
