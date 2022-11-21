@@ -56,8 +56,12 @@ cd ufs-HTF-containers
 mkdir build
 cd build
 ```
-From the build directory, run the following commands to build the testing platform and create base docker images for the exaple testing cases:
+From the ``build`` directory, run the following commands to build the testing platform and create base docker images for the exaple testing cases:
 ```
 cmake -DRUN_DOCKER_AS_ROOT=ON ..
 make build_docker_images
 ```
+The ``RUN_DOCKER_AS_ROOT`` flag is mainly for the machine (e.g. NOAACLOUD) that requires root premission to run docker executable. The default is ``OFF``.
+
+### Running Test Cases
+After the build step, the testing platform and base docker images should be created. One can list images in local Docker repository
