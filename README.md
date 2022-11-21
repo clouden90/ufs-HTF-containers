@@ -107,7 +107,7 @@ Test project /lustre/ufs-HTF-containers/build
     Start 3: test_gfs_v16_atm_Barry
 3/4 Test #3: test_gfs_v16_atm_Barry ...........   Passed  320.72 sec
     Start 4: test_gfs_v17p8_atm_Barry
-4/4 Test #3: test_gfs_v17p8_atm_Barry ........... Passed  474.85 sec 
+4/4 Test #4: test_gfs_v17p8_atm_Barry ........... Passed  574.95 sec 
 
 100% tests passed, 0 tests failed out of 4
 ```
