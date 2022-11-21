@@ -24,7 +24,7 @@ add_test( NAME test_ccpp_scm_LASSO_gfsv16
 
 set_tests_properties( test_ccpp_scm_LASSO_gfsv16
     PROPERTIES                 
-    FIXTURES_SETUP test_com
+    FIXTURES_SETUP test_com_v16
     DEPENDS "test_build_ccpp_scm_container"
     )
 
@@ -34,7 +34,7 @@ add_test( NAME test_ccpp_scm_LASSO_gfsv17p8
 
 set_tests_properties( test_ccpp_scm_LASSO_gfsv17p8
     PROPERTIES                  
-    FIXTURES_SETUP test_com
+    FIXTURES_SETUP test_com_v17p8
     DEPENDS "test_build_ccpp_scm_container"
     )
 
@@ -45,8 +45,8 @@ add_test( NAME test_gfs_v16_atm_Barry
 set_tests_properties( test_gfs_v16_atm_Barry
     PROPERTIES                  
     TIMEOUT 1800
-    FIXTURES_SETUP test_int_atm
-    FIXTURES_REQUIRED "test_com"
+    FIXTURES_SETUP test_int_atm_v16
+    FIXTURES_REQUIRED "test_com_v16"
     DEPENDS "test_build_ufs_container;test_ccpp_scm_LASSO_gfsv16"
     )
 
@@ -57,7 +57,7 @@ add_test( NAME test_gfs_v17p8_atm_Barry
 set_tests_properties( test_gfs_v17p8_atm_Barry
     PROPERTIES                  
     TIMEOUT 1800
-    FIXTURES_SETUP test_int_atm
-    FIXTURES_REQUIRED "test_com"
+    FIXTURES_SETUP test_int_atm_v17p8
+    FIXTURES_REQUIRED "test_com_v17p8"
     DEPENDS "test_build_ufs_container;test_ccpp_scm_LASSO_gfsv17p8"
     )
