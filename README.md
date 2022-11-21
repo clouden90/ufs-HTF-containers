@@ -107,10 +107,68 @@ Test project /lustre/ufs-HTF-containers/build
     Start 3: test_gfs_v16_atm_Barry
 3/4 Test #3: test_gfs_v16_atm_Barry ...........   Passed  320.72 sec
     Start 4: test_gfs_v17p8_atm_Barry
-4/4 Test #3: test_gfs_v17p8_atm_Barry ........... Passed  320.72 sec    
+4/4 Test #3: test_gfs_v17p8_atm_Barry ........... Passed  474.85 sec 
+
+100% tests passed, 0 tests failed out of 4
 ```
 This will run thruogh all 4 test cases sequentially.
 
 The developers can choose to run ccpp-scm test cases only:
 ```
+$ ctest -R test_ccpp_scm*
+Test project /lustre/ufs-HTF-containers/build
+    Start 1: test_ccpp_scm_LASSO_gfsv16
+1/2 Test #1: test_ccpp_scm_LASSO_gfsv16 .......   Passed    2.25 sec
+    Start 2: test_ccpp_scm_LASSO_gfsv17p8
+2/2 Test #2: test_ccpp_scm_LASSO_gfsv17p8 .....   Passed   10.57 sec
+
+100% tests passed, 0 tests failed out of 2
 ```
+
+The developes can also choose to run single test case with verbose output from test:
+```
+$ ctest -V -R test_gfs_v17p8_atm_Barry
+$ ctest -R test_gfs_v17p8_atm_Barry
+Test project /lustre/ufs-HTF-containers/build
+    Start 2: test_ccpp_scm_LASSO_gfsv17p8
+1/2 Test #2: test_ccpp_scm_LASSO_gfsv17p8 .....   Passed    4.29 sec
+    Start 4: test_gfs_v17p8_atm_Barry
+2/2 Test #4: test_gfs_v17p8_atm_Barry .........   Passed  474.85 sec
+
+100% tests passed, 0 tests failed out of 2
+```
+In the above example, it is interesting to see that although we choose to run ``test_gfs_v17p8_atm_Barry`` only, the test platform actually runs 2 test cases ``test_ccpp_scm_LASSO_gfsv17p8`` and ``test_gfs_v17p8_atm_Barry``. It is because a fixture is set for ``test_gfs_v17p8_atm_Barry`` (see tests/CMakeLists.txt). If ``test_ccpp_scm_LASSO_gfsv17p8`` case fails, ``test_gfs_v17p8_atm_Barry`` will not be executed in this case. One can check [here](https://cmake.org/cmake/help/latest/prop_test/FIXTURES_REQUIRED.html#prop_test:FIXTURES_REQUIRED) for more details.
+
+## Adding new test to UFS-HTF
+All the ctesting in UFS-HTF is controlled through ``ufs-HTF-containers/tests/CMakeLists.txt``. A ctest could be either a unit test, or an integration test that executes an application. A unit ctest contains results in a reference log file based on analytical solutions or accurate numerical studies. For application ctest, one could compare to associated reference based on a previous execution of the same test. To determine the pass or failure for a ctest, the actual output could be compared against the reference or obs data. The reader is referred to ``ufs-HTF-containers/tests/CMakeLists.txt``, where several examples exist for both. For example, one can modify ``ufs-HTF-containers/tests/CMakeLists.txt`` to add a ``test_gfs_v17p8_atm_ocn_cice_Barry`` test case by adding the following lines at the end:
+```
+# global Fully coupled FV3-CCPP-MOM6-CICE-CMEPS system at C96L127 Hurricane Barry
+add_test( NAME test_gfs_v17p8_atm_ocn_cice_Barry
+    COMMAND ${SUDO_EXECUTABLE} docker run --rm --env test_name=cpld_control_nowave_noaero_p8 --env run_case=test_C96_Barry --workdir /home/builder/ufs-weather-model/tests --shm-size=512m -it ufs_image )
+
+set_tests_properties( test_gfs_v17p8_atm_ocn_cice_Barry
+    PROPERTIES                  
+    TIMEOUT 1800
+    FIXTURES_SETUP test_cpld_v17p8
+    FIXTURES_REQUIRED "test_atm_v17p8"
+    DEPENDS "test_gfs_v17p8_atm_Barry"
+    )
+```
+
+This will add ``test_gfs_v17p8_atm_ocn_cice_Barry`` test case. Then you will have to do ``cmake`` again under your <build-directory> folder. Then you will find a new test has been added in the test set:
+```
+$ ctest -N
+Test project /lustre/ufs-HTF-containers/build
+  Test #1: test_ccpp_scm_LASSO_gfsv16
+  Test #2: test_ccpp_scm_LASSO_gfsv17p8
+  Test #3: test_gfs_v16_atm_Barry
+  Test #4: test_gfs_v17p8_atm_Barry
+  Test #5: test_gfs_v17p8_atm_ocn_cice_Barry
+```
+Keep in mind the developer will have to prepare the associated input files such as model ICs for ocn and cice models. In this prototype, we provide those ICs within ufs-wm docker image (check ``ufs-HTF-containers/docker/Dockerfile.ufs-wm``).
+
+No we can run the new test using the following command:
+```
+$ ctest -R test_gfs_v17p8_atm_ocn_cice_Barry -FA .
+```
+The ``-FA .`` flag is to exclude fixtures matching so we can run new test case only (assuming all other tests passed).
