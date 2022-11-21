@@ -46,7 +46,7 @@ The prototype UFS-HTF should work with any linux systems with CMake Version > 3.
 ### Download the UFS-HTF prototype
 The UFS-HTF prototype is publicly available on GitHub. To download the HTF code, clone the ``develop`` branch and sub-modules of the repository:
 ```
-git clone --recurse-submodules -b develop https://github.com/clouden90/ufs-HTF-containers.git
+$ git clone --recurse-submodules -b develop https://github.com/clouden90/ufs-HTF-containers.git
 ```
 
 ### Build the UFS-HTF Using CMake
@@ -58,10 +58,59 @@ cd build
 ```
 From the ``build`` directory, run the following commands to build the testing platform and create base docker images for the exaple testing cases:
 ```
-cmake -DRUN_DOCKER_AS_ROOT=ON ..
-make build_docker_images
+$ cmake -DRUN_DOCKER_AS_ROOT=ON ..
+$ make build_docker_images
 ```
 The ``RUN_DOCKER_AS_ROOT`` flag is mainly for the machine (e.g. NOAACLOUD) that requires root premission to run docker executable. The default is ``OFF``.
 
 ### Running Test Cases
-After the build step, the testing platform and base docker images should be created. One can list images in local Docker repository
+After the build step, the testing platform and base docker images should be created. One can list images in local Docker repository to make sure base images are created successfully:
+```
+$ sudo docker image ls
+REPOSITORY                              TAG       IMAGE ID       CREATED         SIZE
+ccpp_scm_image                          latest    12907b725dba   4 hours ago     4.66GB
+ufs_image                               latest    2fc9a43569fa   4 hours ago     4.89GB
+noaaepic/ubuntu20.04-gnu9.3-hpc-stack   v1.2      77e33c658486   7 weeks ago     2.85GB
+dtcenter/common-community-container     gnu9      a7c3b249398b   21 months ago   2.74GB
+```
+Again ``sudo`` is needed when you are in NOAACLOUD platforms. ``ccpp_scm_image`` is for ccpp-scm test cases and ``ufs_image`` is for ufs-wm test cases.
+
+Now you can check the list of default test cases:
+```
+$ ctest -N
+Test project /lustre/ufs-HTF-containers/build
+  Test #1: test_ccpp_scm_LASSO_gfsv16
+  Test #2: test_ccpp_scm_LASSO_gfsv17p8
+  Test #3: test_gfs_v16_atm_Barry
+  Test #4: test_gfs_v17p8_atm_Barry
+```
+
+Currently the prototype UFS-HTF supports 4 tests as shown in next Table. Users who plan to design/add a new test should refer to later section for details.
+Test Number | Test Name  | Test Type/Description | 
+------------| -----------------------------|-------------------------------------------------------------------------------|
+#1          | test_ccpp_scm_LASSO_gfsv16   | component test / ccpp single column model: LASSO case with gfsv16 physics     |
+#2          | test_ccpp_scm_LASSO_gfsv17p8 | component test / ccpp single column model: LASSO case with gfsv17p8 physics   |
+#3          | test_gfs_v16_atm_Barry       | integrate test / ufs atm-only model: Hurricane Barry with gfsv16 physics      |
+#4          | test_gfs_v17p8_atm_Barry     | integrate test / ufs atm-only model: Hurricane Barry with gfsv17p8 physics    |
+
+The design of these test cases is based on the concept of HSD. Let's consider a scenario:
+Developers/Scientists would like to implement a new physic suite for opreational GFS. First we test new development in a relatively simple setup (#1 and #2) for sanity check (e.g. make sure new codes do not crash whole system; check results make sense in single column model case). Then we conduct experitments (#3 and #4) for selected extreme weather events to check the impact of new development. 
+
+The simplest way to run all test cases is run the following command:
+```
+$ ctest
+Test project /lustre/ufs-HTF-containers/build
+    Start 1: test_ccpp_scm_LASSO_gfsv16
+1/4 Test #1: test_ccpp_scm_LASSO_gfsv16 .......   Passed    2.25 sec
+    Start 2: test_ccpp_scm_LASSO_gfsv17p8
+2/4 Test #2: test_ccpp_scm_LASSO_gfsv17p8 .....   Passed   10.57 sec
+    Start 3: test_gfs_v16_atm_Barry
+3/4 Test #3: test_gfs_v16_atm_Barry ...........   Passed  320.72 sec
+    Start 4: test_gfs_v17p8_atm_Barry
+4/4 Test #3: test_gfs_v17p8_atm_Barry ........... Passed  320.72 sec    
+```
+This will run thruogh all 4 test cases sequentially.
+
+The developers can choose to run ccpp-scm test cases only:
+```
+```
