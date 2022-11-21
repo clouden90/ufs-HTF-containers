@@ -44,9 +44,9 @@ machine configurations | VCPUS: 96; MEM: 128 GB  |
 The prototype UFS-HTF should work with any linux systems with CMake Version > 3.19 and pre-installed Docker.
 
 ### Download the UFS-HTF prototype
-The UFS-HTF prototype is publicly available on GitHub. To download the HTF code, clone the ``develop`` branch and sub-modules of the repository:
+The UFS-HTF prototype is publicly available on GitHub. To download the HTF code, clone ``release/public-v1`` branch and sub-modules of the repository:
 ```
-$ git clone --recurse-submodules -b develop https://github.com/clouden90/ufs-HTF-containers.git
+$ git clone --recurse-submodules -b release/public-v1 https://github.com/clouden90/ufs-HTF-containers.git
 ```
 
 ### Build the UFS-HTF Using CMake
