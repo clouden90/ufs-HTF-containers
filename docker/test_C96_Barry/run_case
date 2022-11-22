@@ -151,10 +151,10 @@ export SHOUR=${CHOUR:-00}
 export SECS=`expr $SHOUR \* 3600`
 
 export MOM6_RESTART_SETTING=r
-export FHMAX=${_FHMAX:-1}
-export OUTPUT_FH='1 -1'
-export RESTART_N=1
-export RESTART_INTERVAL='1 -1'
+export FHMAX=${_FHMAX:-2}
+export OUTPUT_FH='2 -1'
+export RESTART_N=2
+export RESTART_INTERVAL='2 -1'
 
 ### end of user define part
 
