@@ -170,5 +170,8 @@ Keep in mind the developer will have to prepare the associated input files such 
 No we can run the new test using the following command:
 ```
 $ ctest -R test_gfs_v17p8_atm_ocn_cice_Barry -FA .
+Test project /home/Yi-cheng.Teng/ufs-HTF-containers/build
+    Start 5: test_gfs_v17p8_atm_ocn_cice_Barry
+1/1 Test #5: test_gfs_v17p8_atm_ocn_cice_Barry ...   Passed  592.20 sec
 ```
 The ``-FA .`` flag is to exclude fixtures matching so we can run new test case only (assuming all other tests passed).
