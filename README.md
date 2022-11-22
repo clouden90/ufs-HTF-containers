@@ -99,17 +99,19 @@ Developers/Scientists would like to implement a new physic suite for opreational
 The simplest way to run all test cases is run the following command:
 ```
 $ ctest
-Test project /lustre/ufs-HTF-containers/build
+Test project /home/Yi-cheng.Teng/ufs-HTF-containers/build
     Start 1: test_ccpp_scm_LASSO_gfsv16
-1/4 Test #1: test_ccpp_scm_LASSO_gfsv16 .......   Passed    2.25 sec
+1/4 Test #1: test_ccpp_scm_LASSO_gfsv16 ..........   Passed    2.23 sec
     Start 2: test_ccpp_scm_LASSO_gfsv17p8
-2/4 Test #2: test_ccpp_scm_LASSO_gfsv17p8 .....   Passed   10.57 sec
+2/4 Test #2: test_ccpp_scm_LASSO_gfsv17p8 ........   Passed    3.40 sec
     Start 3: test_gfs_v16_atm_Barry
-3/4 Test #3: test_gfs_v16_atm_Barry ...........   Passed  320.72 sec
+3/4 Test #3: test_gfs_v16_atm_Barry ..............   Passed  299.14 sec
     Start 4: test_gfs_v17p8_atm_Barry
-4/4 Test #4: test_gfs_v17p8_atm_Barry .........   Passed  458.75 sec
+4/4 Test #4: test_gfs_v17p8_atm_Barry ............   Passed  458.75 sec
 
 100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) = 763.54 sec
 ```
 This will run thruogh all 4 test cases sequentially.
 
@@ -123,6 +125,8 @@ Test project /lustre/ufs-HTF-containers/build
 2/2 Test #2: test_ccpp_scm_LASSO_gfsv17p8 .....   Passed   10.57 sec
 
 100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) = 12.82 sec
 ```
 
 The developes can also choose to run single test case with verbose output from test:
@@ -136,6 +140,7 @@ Test project /lustre/ufs-HTF-containers/build
 2/2 Test #4: test_gfs_v17p8_atm_Barry .........   Passed  474.85 sec
 
 100% tests passed, 0 tests failed out of 2
+Total Test time (real) = 479,14 sec
 ```
 In the above example, it is interesting to see that although we choose to run ``test_gfs_v17p8_atm_Barry`` only, the test platform actually runs 2 test cases ``test_ccpp_scm_LASSO_gfsv17p8`` and ``test_gfs_v17p8_atm_Barry``. It is because a fixture is set for ``test_gfs_v17p8_atm_Barry`` (see tests/CMakeLists.txt). If ``test_ccpp_scm_LASSO_gfsv17p8`` case fails, ``test_gfs_v17p8_atm_Barry`` will not be executed in this case. One can check [here](https://cmake.org/cmake/help/latest/prop_test/FIXTURES_REQUIRED.html#prop_test:FIXTURES_REQUIRED) for more details.
 
