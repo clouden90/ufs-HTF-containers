@@ -107,7 +107,7 @@ Test project /lustre/ufs-HTF-containers/build
     Start 3: test_gfs_v16_atm_Barry
 3/4 Test #3: test_gfs_v16_atm_Barry ...........   Passed  320.72 sec
     Start 4: test_gfs_v17p8_atm_Barry
-4/4 Test #4: test_gfs_v17p8_atm_Barry ........... Passed  574.95 sec 
+4/4 Test #4: test_gfs_v17p8_atm_Barry .........   Passed  458.75 sec
 
 100% tests passed, 0 tests failed out of 4
 ```
@@ -172,6 +172,6 @@ No we can run the new test using the following command:
 $ ctest -R test_gfs_v17p8_atm_ocn_cice_Barry -FA .
 Test project /home/Yi-cheng.Teng/ufs-HTF-containers/build
     Start 5: test_gfs_v17p8_atm_ocn_cice_Barry
-1/1 Test #5: test_gfs_v17p8_atm_ocn_cice_Barry ...   Passed  592.20 sec
+1/1 Test #5: test_gfs_v17p8_atm_ocn_cice_Barry ...   Passed  594.37 sec
 ```
 The ``-FA .`` flag is to exclude fixtures matching so we can run new test case only (assuming all other tests passed).
