@@ -28,8 +28,9 @@ if(BUILD_DOCKER_IMAGES)
   COMMAND echo "Build ufs-wm and ccpp-scm docker images!!!" 
   COMMAND ${SUDO_EXECUTABLE} ${Docker_EXECUTABLE} build --build-arg run_case=test_C96_Barry --file ${CMAKE_CURRENT_SOURCE_DIR}/docker/Dockerfile.ufs-wm 
       --tag ufs_image ${CMAKE_CURRENT_SOURCE_DIR}
-  COMMAND ${SUDO_EXECUTABLE} ${Docker_EXECUTABLE} build --file ${CMAKE_CURRENT_SOURCE_DIR}/docker/Dockerfile.ccpp-scm 
-      --tag ccpp_scm_image ${CMAKE_CURRENT_SOURCE_DIR} 
+#  COMMAND ${SUDO_EXECUTABLE} ${Docker_EXECUTABLE} build --file ${CMAKE_CURRENT_SOURCE_DIR}/docker/Dockerfile.ccpp-scm 
+#      --tag ccpp_scm_image ${CMAKE_CURRENT_SOURCE_DIR} 
+  COMMAND ${SUDO_EXECUTABLE} ${Docker_EXECUTABLE} pull dtcenter/ccpp-scm:v6.0.0 
   )
 endif()
 

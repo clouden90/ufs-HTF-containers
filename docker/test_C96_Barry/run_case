@@ -210,7 +210,7 @@ fi
 compute_petbounds
 
 # FV3_RUN could have multiple entry seperated by space
-python -m pip install awscli
+python -m pip install awscli==1.27.20
 export PATH=/home/builder/.local/bin:$PATH
 export INPUTDATA_ROOT='s3://noaa-ufs-regtests-pds/input-data-20221101'
 export INPUTDATA_ROOT_WW3='${INPUTDATA_ROOT}/WW3_input_data_20220624'
