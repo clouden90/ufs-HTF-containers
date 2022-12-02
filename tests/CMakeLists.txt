@@ -52,6 +52,7 @@ add_test( NAME test_gfs_v16_atm_Barry
 set_tests_properties( test_gfs_v16_atm_Barry
     PROPERTIES                  
     TIMEOUT 1800
+    LABELS Barry
     FIXTURES_SETUP test_atm
     FIXTURES_REQUIRED test_check
     )
@@ -63,6 +64,7 @@ add_test( NAME test_gfs_v17p8_atm_Barry
 set_tests_properties( test_gfs_v17p8_atm_Barry
     PROPERTIES                  
     TIMEOUT 1800
+    LABELS Barry
     FIXTURES_SETUP test_atm
     FIXTURES_REQUIRED test_check
     DEPENDS test_gfs_v16_atm_Barry
